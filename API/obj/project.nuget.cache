@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "SZeO218vttJWgPE3Xnlij3sM1kbT18XzL0ycg0S9uY2+F5WYu0y5BV/EWaxJ+LMsGyfYruJHiW1fJDk74UZRhQ==",
+  "success": true,
+  "projectFilePath": "/Users/delfim/Documents/Projects/personal/utomi-api/API/API.csproj",
+  "expectedPackageFiles": [
+    "/Users/delfim/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/Users/delfim/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/delfim/.nuget/packages/swashbuckle.aspnetcore/5.6.3/swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "/Users/delfim/.nuget/packages/swashbuckle.aspnetcore.swagger/5.6.3/swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "/Users/delfim/.nuget/packages/swashbuckle.aspnetcore.swaggergen/5.6.3/swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "/Users/delfim/.nuget/packages/swashbuckle.aspnetcore.swaggerui/5.6.3/swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}

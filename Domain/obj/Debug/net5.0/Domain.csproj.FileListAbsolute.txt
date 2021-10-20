@@ -1,0 +1,12 @@
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/bin/Debug/net5.0/Domain.deps.json
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/bin/Debug/net5.0/Domain.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/bin/Debug/net5.0/ref/Domain.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/bin/Debug/net5.0/Domain.pdb
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.csproj.AssemblyReference.cache
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.AssemblyInfoInputs.cache
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.AssemblyInfo.cs
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.csproj.CoreCompileInputs.cache
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/ref/Domain.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/Debug/net5.0/Domain.pdb

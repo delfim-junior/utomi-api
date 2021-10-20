@@ -2,15 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Extensions;
+using Application.Features.Authentication;
+using Application.Interfaces;
+using Domain;
+using FluentValidation.AspNetCore;
+using Infrastructure.Security;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Persistence;
 
 namespace API
 {
@@ -21,12 +30,34 @@ namespace API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("PostGreSQL"));
+            });
+
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddIdentityServices(Configuration);
+
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy",
+                    policy => { policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+            });
+
+            services.AddMediatR(typeof(Login.Command).Assembly);
+
+            services.AddControllers()
+                .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Login>())
+                .AddNewtonsoftJson(opt =>
+                    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"}); });
         }
 
@@ -40,9 +71,11 @@ namespace API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

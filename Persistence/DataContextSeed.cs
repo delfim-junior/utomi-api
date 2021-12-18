@@ -13,8 +13,6 @@ namespace Persistence
 {
     public class DataContextSeed
     {
-        private readonly UserManager<AppUser> _userManager;
-
         public static async Task SeedAsync(DataContext context, ILoggerFactory loggerFactory,
             IConfiguration configuration, UserManager<AppUser> userManager)
         {
@@ -34,6 +32,35 @@ namespace Persistence
                     }
 
                     await context.SaveChangesAsync();
+                }
+
+                if (!context.MedicalConsultationStatus.Any())
+                {
+                    var statusData = await File.ReadAllTextAsync("../Persistence/SeedData/statusSeed.json");
+                    var statusList = JsonSerializer.Deserialize<List<MedicalConsultationStatus>>(statusData);
+
+                    if (statusList != null)
+                    {
+                        foreach (var status in statusList)
+                        {
+                            await context.AddAsync(status);
+                        }
+                    }
+
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.DoctorRegistrationStatuses.Any())
+                {
+                    var statusData =
+                        await File.ReadAllTextAsync("../Persistence/SeedData/doctorRegistrationStatus.json");
+                    var statusList = JsonSerializer.Deserialize<List<DoctorRegistrationStatus>>(statusData);
+
+                    if (statusList != null)
+                    {
+                        await context.AddRangeAsync(statusList);
+                        await context.SaveChangesAsync();
+                    }
                 }
             }
             catch (Exception e)

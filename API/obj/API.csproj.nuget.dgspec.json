@@ -51,6 +51,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "JsonModelBinder": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[5.0.11, )"
@@ -145,6 +153,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[10.3.3, )"
@@ -152,6 +164,10 @@
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             }
           },
           "imports": [
@@ -165,6 +181,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -207,6 +226,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
               "version": "[5.0.11, )"
@@ -272,6 +295,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[6.13.1, )"
@@ -288,6 +315,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -334,6 +364,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.11, )"

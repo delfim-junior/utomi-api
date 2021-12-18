@@ -17,7 +17,7 @@ namespace Infrastructure.Security
         public string GetCurrentUserUserName()
         {
             var userName = _httpContextAccessor.HttpContext?.User.Claims
-                .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                .FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
             return userName;
         }

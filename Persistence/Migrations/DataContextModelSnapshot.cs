@@ -27,9 +27,18 @@ namespace Persistence.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -38,7 +47,16 @@ namespace Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("text");
+
+                    b.Property<string>("IdNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -79,6 +97,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -87,6 +107,139 @@ namespace Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Domain.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CareerStartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeclineReason")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("DoctorRegistrationStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Speciality")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorRegistrationStatusId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Domain.DoctorDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorDocuments");
+                });
+
+            modelBuilder.Entity("Domain.DoctorRegistrationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DoctorRegistrationStatuses");
+                });
+
+            modelBuilder.Entity("Domain.MedicalConsultation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTimeOffset>("BookDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("DoctorConfirmationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("MedicalConsultationStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RequestedById")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RequestedDoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("SpentHours")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTimeOffset?>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("SubmissionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicalConsultationStatusId");
+
+                    b.HasIndex("RequestedById");
+
+                    b.HasIndex("RequestedDoctorId");
+
+                    b.ToTable("MedicalConsultations");
+                });
+
+            modelBuilder.Entity("Domain.MedicalConsultationStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MedicalConsultationStatus");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -217,6 +370,54 @@ namespace Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Domain.AppUser", b =>
+                {
+                    b.HasOne("Domain.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Domain.Doctor", b =>
+                {
+                    b.HasOne("Domain.DoctorRegistrationStatus", "DoctorRegistrationStatus")
+                        .WithMany()
+                        .HasForeignKey("DoctorRegistrationStatusId");
+
+                    b.Navigation("DoctorRegistrationStatus");
+                });
+
+            modelBuilder.Entity("Domain.DoctorDocument", b =>
+                {
+                    b.HasOne("Domain.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Domain.MedicalConsultation", b =>
+                {
+                    b.HasOne("Domain.MedicalConsultationStatus", "MedicalConsultationStatus")
+                        .WithMany()
+                        .HasForeignKey("MedicalConsultationStatusId");
+
+                    b.HasOne("Domain.AppUser", "RequestedBy")
+                        .WithMany()
+                        .HasForeignKey("RequestedById");
+
+                    b.HasOne("Domain.Doctor", "RequestedDoctor")
+                        .WithMany()
+                        .HasForeignKey("RequestedDoctorId");
+
+                    b.Navigation("MedicalConsultationStatus");
+
+                    b.Navigation("RequestedBy");
+
+                    b.Navigation("RequestedDoctor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

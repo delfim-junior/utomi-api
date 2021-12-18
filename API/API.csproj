@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="JsonModelBinder" Version="2.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
@@ -22,6 +24,10 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
       <ProjectReference Include="..\Persistence\Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Uploads" />
     </ItemGroup>
 
 </Project>

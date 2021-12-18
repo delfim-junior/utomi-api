@@ -11,7 +11,8 @@ namespace API.Extensions
 {
     public static class IdentityServicesExtensions
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services,
+            IConfiguration configuration)
         {
             var builder = services.AddIdentityCore<AppUser>(options => { options.User.RequireUniqueEmail = true; });
 
@@ -21,16 +22,23 @@ namespace API.Extensions
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            var key = Encoding.ASCII.GetBytes(configuration.GetSection("Token:TokenSecret").Value);
+
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey =
-                            new SymmetricSecurityKey(
-                                Encoding.UTF8.GetBytes(configuration.GetSection("Token:TokenSecret").Value)),
-                        ValidateIssuer = true,
+                            new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
                         ValidateAudience = false
                     };
                 });

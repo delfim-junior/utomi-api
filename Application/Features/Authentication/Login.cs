@@ -32,24 +32,21 @@ namespace Application.Features.Authentication
         public class Handler : IRequestHandler<Command, LoginResponse>
         {
             private readonly DataContext _context;
-            private readonly UserManager<AppUser> _userManager;
             private readonly IJwtGenerator _jwtGenerator;
-            private readonly IUserAccessor _userAccessor;
             private readonly SignInManager<AppUser> _signInManager;
 
             public Handler(DataContext context, UserManager<AppUser> userManager, IJwtGenerator jwtGenerator,
                 IUserAccessor userAccessor, SignInManager<AppUser> signInManager)
             {
                 _context = context;
-                _userManager = userManager;
                 _jwtGenerator = jwtGenerator;
-                _userAccessor = userAccessor;
                 _signInManager = signInManager;
             }
 
             public async Task<LoginResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users
+                    .Include(x=>x.Doctor)
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (user == null)
@@ -65,7 +62,8 @@ namespace Application.Features.Authentication
                     {
                         Token = _jwtGenerator.Generate(user),
                         Email = user.Email,
-                        UserName = user.UserName
+                        UserName = user.UserName,
+                        Doctor = user.Doctor
                     };
                 }
 

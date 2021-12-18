@@ -64,3 +64,6 @@
 /Users/delfim/Documents/Projects/personal/utomi-api/API/obj/Debug/net5.0/API.genruntimeconfig.cache
 /Users/delfim/Documents/Projects/personal/utomi-api/API/bin/Debug/net5.0/Humanizer.dll
 /Users/delfim/Documents/Projects/personal/utomi-api/API/bin/Debug/net5.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/API/bin/Debug/net5.0/AutoMapper.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/API/bin/Debug/net5.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/delfim/Documents/Projects/personal/utomi-api/API/bin/Debug/net5.0/JsonModelBinder.dll

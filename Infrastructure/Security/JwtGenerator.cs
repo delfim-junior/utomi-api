@@ -22,26 +22,26 @@ namespace Infrastructure.Security
             _configuration = configuration;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:TokenSecret"]));
         }
+
         public string Generate(AppUser appUser)
         {
-            var claims = new List<Claim>
-            {
-                new(JwtRegisteredClaimNames.Email, appUser.Email)
-            };
-
-            var signinCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenSecret = _configuration.GetSection("Token:TokenSecret").Value;
+            var key = Encoding.ASCII.GetBytes(tokenSecret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Token:Duration"])),
-                SigningCredentials = signinCredentials
+                Expires = DateTime.UtcNow.AddHours(2),
+                SigningCredentials =
+                    new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, appUser.UserName),
+                    new Claim(ClaimTypes.Email, appUser.Email)
+                })
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
             return tokenHandler.WriteToken(token);
         }
     }

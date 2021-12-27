@@ -52,10 +52,11 @@ namespace Application.Features.MedicalConsultations
                 var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserUserName(), cancellationToken);
                 
-                var doctor = await _context.Doctors
-                    .FirstOrDefaultAsync(x => x.Id == request.DoctorId, cancellationToken);
+                var requestedDoctorUser = await _context.Users
+                    .Include(x=>x.Doctor)
+                    .FirstOrDefaultAsync(x => x.Doctor.Id == request.DoctorId, cancellationToken);
 
-                if (doctor == null)
+                if (requestedDoctorUser == null)
                 {
                     throw new Exception("Doctor not found");
                 }
@@ -73,7 +74,7 @@ namespace Application.Features.MedicalConsultations
                     Description = request.Description,
                     BookDate = request.BookDate,
                     RequestedBy = appUser,
-                    RequestedDoctor = doctor,
+                    RequestedDoctorUser = requestedDoctorUser,
                     SubmissionDate = DateTimeOffset.Now,
                     MedicalConsultationStatus = medicalStatus
                 };

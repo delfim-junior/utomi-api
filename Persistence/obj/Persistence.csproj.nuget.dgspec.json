@@ -13,6 +13,9 @@
         "packagesPath": "/Users/delfim/.nuget/packages/",
         "outputPath": "/Users/delfim/Documents/Projects/personal/utomi-api/Domain/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "/Users/delfim/.nuget/NuGet/NuGet.Config"
         ],
@@ -75,6 +78,9 @@
         "packagesPath": "/Users/delfim/.nuget/packages/",
         "outputPath": "/Users/delfim/Documents/Projects/personal/utomi-api/Persistence/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "/Users/delfim/.nuget/NuGet/NuGet.Config"
         ],

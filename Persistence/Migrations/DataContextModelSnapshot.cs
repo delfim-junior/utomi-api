@@ -186,10 +186,25 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<DateTimeOffset?>("AcceptanceDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AcceptedById")
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset>("BookDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTimeOffset?>("DeclineDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeclinedById")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DoctorComment")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DoctorConfirmationDate")
@@ -204,8 +219,8 @@ namespace Persistence.Migrations
                     b.Property<string>("RequestedById")
                         .HasColumnType("text");
 
-                    b.Property<int?>("RequestedDoctorId")
-                        .HasColumnType("integer");
+                    b.Property<string>("RequestedDoctorUserId")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("SpentHours")
                         .HasColumnType("numeric");
@@ -218,11 +233,15 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AcceptedById");
+
+                    b.HasIndex("DeclinedById");
+
                     b.HasIndex("MedicalConsultationStatusId");
 
                     b.HasIndex("RequestedById");
 
-                    b.HasIndex("RequestedDoctorId");
+                    b.HasIndex("RequestedDoctorUserId");
 
                     b.ToTable("MedicalConsultations");
                 });
@@ -401,6 +420,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.MedicalConsultation", b =>
                 {
+                    b.HasOne("Domain.AppUser", "AcceptedBy")
+                        .WithMany()
+                        .HasForeignKey("AcceptedById");
+
+                    b.HasOne("Domain.AppUser", "DeclinedBy")
+                        .WithMany()
+                        .HasForeignKey("DeclinedById");
+
                     b.HasOne("Domain.MedicalConsultationStatus", "MedicalConsultationStatus")
                         .WithMany()
                         .HasForeignKey("MedicalConsultationStatusId");
@@ -409,15 +436,19 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("RequestedById");
 
-                    b.HasOne("Domain.Doctor", "RequestedDoctor")
+                    b.HasOne("Domain.AppUser", "RequestedDoctorUser")
                         .WithMany()
-                        .HasForeignKey("RequestedDoctorId");
+                        .HasForeignKey("RequestedDoctorUserId");
+
+                    b.Navigation("AcceptedBy");
+
+                    b.Navigation("DeclinedBy");
 
                     b.Navigation("MedicalConsultationStatus");
 
                     b.Navigation("RequestedBy");
 
-                    b.Navigation("RequestedDoctor");
+                    b.Navigation("RequestedDoctorUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

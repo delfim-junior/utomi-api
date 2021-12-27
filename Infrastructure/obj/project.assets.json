@@ -836,10 +836,7 @@
         },
         "runtime": {
           "bin/placeholder/Application.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "Domain/1.0.0": {
         "type": "project",
@@ -2299,7 +2296,8 @@
     ]
   },
   "packageFolders": {
-    "/Users/delfim/.nuget/packages/": {}
+    "/Users/delfim/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -2310,6 +2308,9 @@
       "packagesPath": "/Users/delfim/.nuget/packages/",
       "outputPath": "/Users/delfim/Documents/Projects/personal/utomi-api/Infrastructure/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "/Users/delfim/.nuget/NuGet/NuGet.Config"
       ],
@@ -2362,9 +2363,6 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.AspNetCore.App": {
-            "privateAssets": "none"
-          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }

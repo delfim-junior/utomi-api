@@ -30,7 +30,7 @@ namespace Application.Features.MedicalConsultations
             {
                 var consultations = await _context.MedicalConsultations
                     .Include(x=>x.RequestedBy)
-                    .Include(x=>x.RequestedDoctor)
+                    .Include(x=>x.RequestedDoctorUser)
                     .ToListAsync(cancellationToken);
 
                 return _mapper.Map<List<MedicalConsultation>, List<MedicalConsultationDto>>(consultations);

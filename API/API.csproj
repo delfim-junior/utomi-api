@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Errors" />
       <Folder Include="Uploads" />
     </ItemGroup>
 
